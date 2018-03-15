@@ -3,27 +3,33 @@
     <el-container>
       <el-header>
         <el-col class="logo">MrParker</el-col>
+        <el-col class="switch">
+          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+            <el-radio-button :label="false">展开</el-radio-button>
+            <el-radio-button :label="true">收起</el-radio-button>
+          </el-radio-group>
+        </el-col>
         <el-col class="setting">
 
 
-<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" text-color="#fff"
-  active-text-color="#ffd04b" background-color="#20a0ff">
-  <el-menu-item index="1">处理中心</el-menu-item>
-  <el-submenu index="2">
-    <template slot="title">我的工作台</template>
-    <el-menu-item index="2-1">选项1</el-menu-item>
-    <el-menu-item index="2-2">选项2</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
-    <el-submenu index="2-4">
-      <template slot="title">选项4</template>
-      <el-menu-item index="2-4-1">选项1</el-menu-item>
-      <el-menu-item index="2-4-2">选项2</el-menu-item>
-      <el-menu-item index="2-4-3">选项3</el-menu-item>
-    </el-submenu>
-  </el-submenu>
-  <el-menu-item index="3" disabled>消息中心</el-menu-item>
-  <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-</el-menu>
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" text-color="#fff"
+            active-text-color="#ffd04b" background-color="#20a0ff">
+            <el-menu-item index="1">处理中心</el-menu-item>
+            <el-submenu index="2">
+              <template slot="title">我的工作台</template>
+              <el-menu-item index="2-1">选项1</el-menu-item>
+              <el-menu-item index="2-2">选项2</el-menu-item>
+              <el-menu-item index="2-3">选项3</el-menu-item>
+              <el-submenu index="2-4">
+                <template slot="title">选项4</template>
+                <el-menu-item index="2-4-1">选项1</el-menu-item>
+                <el-menu-item index="2-4-2">选项2</el-menu-item>
+                <el-menu-item index="2-4-3">选项3</el-menu-item>
+              </el-submenu>
+            </el-submenu>
+            <el-menu-item index="3" disabled>消息中心</el-menu-item>
+            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+          </el-menu>
 
           <!-- <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
@@ -85,33 +91,24 @@
                 </el-menu-item>
               </el-menu> -->
 
+              <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" router >
 
-              <div class="navMenu">  
-  
-    <label v-for="navMenu in navMenus">  
-      <div>
-      <el-menu-item v-if="navMenu.childs==null"  
-                    :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name" :route="navMenu.entity.value"  
-                    disabled="">  
-        <i :class="navMenu.entity.icon"></i>  
-        <span slot="title">{{navMenu.entity.alias}}</span>  
-      </el-menu-item>  
-  
-      <el-submenu v-if="navMenu.childs&&navMenu.entity&&navMenu.entity.state==='ENABLE'"  
-                  :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name">  
-                  <div>
-        <template slot="title">  
-          <i :class="navMenu.entity.icon"></i>  
-          <span> {{navMenu.entity.alias}}</span>  
-        </template>  
-        <NavMenu :navMenus="navMenu.childs"></NavMenu>  </div>
-      </el-submenu>  
+                <template v-for="(item,index) in navMenus" v-if="item.entity.state == 'ENABLE'">
+                  <el-submenu :index="item.entity.id" v-if="item.entity.state == 'ENABLE'">
+                    <template slot="title">
+                      <i :class="item.entity.icon"></i>
+                      <span slot="title">{{item.entity.alias}}</span>
+                    </template>
+                    <el-menu-item v-for="(child,i) in item.childs" :index="child.entity.value">{{child.entity.alias}}</el-menu-item>
+                    <!-- <el-menu-item v-if="child.childs" v-for="(_child,_i) in child.childs" :index="_child.entity.value">{{_child.entity.alias}}</el-menu-item> -->
+                  </el-submenu>
 
-    </div>
-    </label>  
-  
-  </div>  
+                </template>
 
+              </el-menu>
+
+
+              
 
             </el-col>
           </el-row>
@@ -160,13 +157,14 @@ export default {
       activeIndex2: '1',
       //http://blog.csdn.net/goodsave/article/details/78879842
       _navMenus: [{"entity": null,"childs":[]},{"entity": null,"childs":[]},{"entity": null,"childs":[]}],
+      isCollapse: false,
       navMenus: [
             {
                 "entity": {
                     "id": 1,
                     "parentMenuId": 0,
                     "name": "systemManage",
-                    "icon": "el-icon-message\r\n",
+                    "icon": "el-icon-menu",
                     "alias": "系统管理",
                     "state": "ENABLE",
                     "sort": 0,
@@ -247,7 +245,7 @@ export default {
                     "id": 6,
                     "parentMenuId": 0,
                     "name": "userManage",
-                    "icon": "el-icon-news",
+                    "icon": "el-icon-setting",
                     "alias": "用户管理",
                     "state": "ENABLE",
                     "sort": 1,
@@ -329,7 +327,7 @@ export default {
                     "id": 9,
                     "parentMenuId": 0,
                     "name": "contentManage",
-                    "icon": "el-icon-rank",
+                    "icon": "el-icon-location",
                     "alias": "内容管理",
                     "state": "ENABLE",
                     "sort": 2,
@@ -440,6 +438,18 @@ a {
   border-right:1px solid #fff;
   display: inline-block;
 }
+.switch{
+  display: inline-block;
+  text-align: left;
+  width:150px;
+  float: left;
+  margin-top: 10px;
+}
+.switch label{
+    display: inline-block;
+    font-size: 14px;
+}
+
 .setting{
   display: inline-block;
   text-align: right;
@@ -470,3 +480,6 @@ a {
     font-size: 12px;
   }
 </style>
+
+
+
