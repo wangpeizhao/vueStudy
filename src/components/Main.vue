@@ -31,7 +31,7 @@
             <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
           </el-menu>
 
-          <!-- <el-dropdown @command="handleCommand">
+          <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
               MrParker<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -42,7 +42,7 @@
               <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
               <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown> -->
+          </el-dropdown>
 
 
         </el-col>
@@ -91,10 +91,10 @@
                 </el-menu-item>
               </el-menu> -->
 
-              <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" router :default-openeds="[1]">
+              <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" router :default-openeds="['1']" :unique-opened="uniqueOpened">
 
                 <template v-for="(item,index) in navMenus" v-if="item.entity.state == 'ENABLE'">
-                  <el-submenu :index="item.entity.id" :key="item.entity.id" v-if="item.entity.state == 'ENABLE'">
+                  <el-submenu :index="item.entity.id+''" :key="item.entity.id" v-if="item.entity.state == 'ENABLE'">
                     <template slot="title">
                       <i :class="item.entity.icon"></i>
                       <span slot="title">{{item.entity.alias}}</span>
@@ -158,6 +158,7 @@ export default {
       //http://blog.csdn.net/goodsave/article/details/78879842
       _navMenus: [{"entity": null,"childs":[]},{"entity": null,"childs":[]},{"entity": null,"childs":[]}],
       isCollapse: false,
+      uniqueOpened: true,
       navMenus: [
             {
                 "entity": {
@@ -406,13 +407,15 @@ export default {
     },
     getUsers(){},
     handleAdd(){},
-
+    handleCommand(command){
+      this.$message('click on item ' + command);
+    }
   },
   mounted(){
-    for(let navMenu in this.navMenus){
-      console.log('navMenu.childs');
-      console.log(navMenu);
-    }
+    // for(let navMenu in this.navMenus){
+    //   // console.log('navMenu.childs');
+    //   console.log(navMenu);
+    // }
     
 
   }
@@ -457,6 +460,10 @@ a {
   width:600px;
   float: right;
   margin-right: 20px;
+}
+.setting .el-menu--horizontal{
+  display: inline-block;
+  vertical-align: top;
 }
 .el-header {
     height: 60px;
