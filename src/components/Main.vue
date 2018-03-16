@@ -91,15 +91,15 @@
                 </el-menu-item>
               </el-menu> -->
 
-              <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" router >
+              <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" router :default-openeds="[1]">
 
                 <template v-for="(item,index) in navMenus" v-if="item.entity.state == 'ENABLE'">
-                  <el-submenu :index="item.entity.id" v-if="item.entity.state == 'ENABLE'">
+                  <el-submenu :index="item.entity.id" :key="item.entity.id" v-if="item.entity.state == 'ENABLE'">
                     <template slot="title">
                       <i :class="item.entity.icon"></i>
                       <span slot="title">{{item.entity.alias}}</span>
                     </template>
-                    <el-menu-item v-for="(child,i) in item.childs" :index="child.entity.value">{{child.entity.alias}}</el-menu-item>
+                    <el-menu-item v-for="(child,i) in item.childs" :key="child.entity.id" :index="child.entity.value">{{child.entity.alias}}</el-menu-item>
                     <!-- <el-menu-item v-if="child.childs" v-for="(_child,_i) in child.childs" :index="_child.entity.value">{{_child.entity.alias}}</el-menu-item> -->
                   </el-submenu>
 
@@ -395,6 +395,7 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
+// this.navMenus[0]=null;console.log(this.navMenus);
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
