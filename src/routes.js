@@ -3,6 +3,12 @@ import Main from '@/components/Main'
 import Lists from '@/components/Lists'
 import Users from '@/components/Users'
 import News from '@/components/News'
+// import NotFound from '@/components/NotFound'
+
+const NotFound = {
+	props: ['msg'],
+	template: '<h1>{{msg}}</h1>'
+}
 
 let routes = {
 	mode: 'history',
@@ -21,6 +27,11 @@ let routes = {
 	    	path: '/list',
 	    	name: 'Lists',
 	    	component: Lists
+	    },
+	    { 
+	    	path: '*',
+	    	component: NotFound,
+	    	props: {msg:'Not Found!'}
 	    }
 	]
 };
