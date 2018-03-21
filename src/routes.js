@@ -3,6 +3,7 @@ import Main from '@/components/Main'
 import Lists from '@/components/Lists'
 import Users from '@/components/Users'
 import News from '@/components/News'
+import Menus from '@/components/Menu'
 // import NotFound from '@/components/NotFound'
 
 const NotFound = {
@@ -21,6 +22,7 @@ let routes = {
 	      children: [
 	      	{path: '/users',name: 'users',component: Users},
 	      	{path: '/news',name: 'news',component: News},
+	      	{path: '/menus',name: 'menus',component: Menus},
 	      ]
 	    },
 	    {
