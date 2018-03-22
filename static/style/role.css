@@ -1,0 +1,174 @@
+.common_box div{
+  -webkit-box-sizing: border-box; */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.clearfix:before {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.selected {
+  position: relative;
+  display: inline-block;
+  /*margin-top: 5px;*/
+}
+
+.selected i {
+  position: absolute;
+  bottom: 7px;
+  right: 0px;
+  font-size: 18px;
+  color: #20a3fe;
+  cursor: pointer;
+}
+
+.toggle {
+  /*display: block !important;*/
+  color: #20a3fe;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  font-size: 12px;
+}
+.dn {
+  display: none;
+}
+
+.first_level {
+  border-bottom: 1px solid #dfdfdf;
+  position: relative;
+}
+
+.first_level:last-child {
+  border-bottom: 0;
+}
+
+.first_left {
+  width: 12.5%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.first_right {
+  width: 86.5%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+
+/* 第二级 */
+.second_level {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.second_level:last-child {
+  border-bottom: 0;
+}
+
+.second_left {
+  width: 14%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.second_right {
+  width: 85%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+
+/* 第三级 */
+.third_level {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.third_level:last-child {
+  border-bottom: 0;
+}
+
+.third_left {
+  width: 16%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.third_right {
+  width: 83%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+
+/* 第四级 */
+.fourth_level {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.fourth_level:last-child {
+  border-bottom: 0;
+}
+
+.fourth_left {
+  width: 20%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.fourth_right {
+  width: 79%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+
+/* 第五级 */
+.fifth_level {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.fifth_level:last-child {
+  border-bottom: 0;
+}
+
+.fifth_left {
+  width: 25%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.fifth_right {
+  width: 74%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+
+/* 第六级 */
+.sixth_level {
+  position: relative;
+  width: 100%;
+  padding-bottom: 0px;
+}
+.sixth_level:last-child{
+  margin-bottom: 5px;
+}
+
+.sixth_right {
+  width: 77%;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+} 
