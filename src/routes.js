@@ -4,6 +4,7 @@ import Lists from '@/components/Lists'
 import Users from '@/components/Users'
 import News from '@/components/News'
 import Menus from '@/components/Menu'
+import Roles from '@/components/Role'
 // import NotFound from '@/components/NotFound'
 
 const NotFound = {
@@ -23,6 +24,7 @@ let routes = {
 	      	{path: '/users',name: 'users',component: Users},
 	      	{path: '/news',name: 'news',component: News},
 	      	{path: '/menus',name: 'menus',component: Menus},
+	      	{path: '/roles',name: 'roles',component: Roles},
 	      ]
 	    },
 	    {

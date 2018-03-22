@@ -25,10 +25,50 @@ router.beforeEach((to, from, next) => {
 	next()
 })
 
+const store = new Vuex.Store({
+  state: {
+    roleSelected: [],
+    roleParentId: []
+  },
+  mutations: {
+    roleSelectedAdd (state,id) {
+    	if(state.roleSelected.length==0 && typeof(id) == 'object'){
+    		state.roleSelected = id;
+    		// console.log(state.roleSelected);
+    		return true;
+    	}
+      	state.roleSelected.push(id);
+      	// console.log(state.roleSelected);
+    },
+    roleSelectedDel (state,id) {
+		let index = state.roleSelected.indexOf(id);
+		if(index > -1){
+			state.roleSelected.splice(index, 1);
+		}
+		// console.log(state.roleSelected);
+    },
+    roleParentId (state,pIds){
+    	state.roleParentId = pIds;
+    }
+  },
+  actions: {
+    roleSelectedAdd (context,id) {
+      context.commit('roleSelectedAdd',id)
+    },
+    roleSelectedDel (context,id) {
+      context.commit('roleSelectedDel',id)
+    },
+    roleParentId (context,id) {
+      context.commit('roleParentId',id)
+    },
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   // el: '#app',
   router,
+  store,
   // components: { App },
   // template: '<App/>'
   render:h => h(App)

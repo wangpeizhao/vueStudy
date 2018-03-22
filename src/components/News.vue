@@ -1,79 +1,302 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期"
-      sortable
-      width="180"
-      :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
-      :filter-method="filterHandler"
-    >
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="姓名"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址"
-      :formatter="formatter">
-    </el-table-column>
-    <el-table-column
-      prop="tag"
-      label="标签"
-      width="100"
-      :filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
-      :filter-method="filterTag"
-      filter-placement="bottom-end">
-      <template slot-scope="scope">
-        <el-tag
-          :type="scope.row.tag === '家' ? 'primary' : 'success'"
-          close-transition>{{scope.row.tag}}</el-tag>
-      </template>
-    </el-table-column>
-  </el-table>
+  <el-menu  
+       default-active="0"  
+       class="el-menu-vertical-demo"  
+       @select="handleSelect"  
+       background-color="#F0F6F6"  
+       text-color="#3C3F41"  
+       active-text-color="black">  
+       <div class="navMenu">  
+  
+        <label v-for="navMenu in navMenus">  
+          <el-menu-item v-if="navMenu.childs&&navMenu.entity&&navMenu.entity.state==='ENABLE'"  
+                        :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name" :route="navMenu.entity.value"  
+                        disabled="">  
+            <i :class="navMenu.entity.icon"></i>  
+            <span slot="title">{{navMenu.entity.alias}}</span>  
+          </el-menu-item>  
+      
+          <el-submenu v-if="navMenu.childs&&navMenu.entity&&navMenu.entity.state==='ENABLE'"  
+                      :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name">  
+            <template slot="title">  
+              <i :class="navMenu.entity.icon"></i>  
+              <span> {{navMenu.entity.alias}}</span>  
+            </template>  
+            <NavMenu :navMenus="navMenu.childs"></NavMenu>  
+          </el-submenu>  
+        </label>  
+      
+      </div>  
+     </el-menu>  
 </template>
 
 <script>
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          tag: '家'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          tag: '公司'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          tag: '家'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          tag: '公司'
-        }]
+        name: 'NavMenu',  
+        props: ['navMenus'],  
+        navMenus: [{  
+            "entity": null,  
+            "childs": [  
+                {  
+                    "entity": {  
+                        "id": 1,  
+                        "parentMenuId": 0,  
+                        "name": "systemManage",  
+                        "icon": "el-icon-message\r\n",  
+                        "alias": "系统管理",  
+                        "state": "ENABLE",  
+                        "sort": 0,  
+                        "value": null,  
+                        "type": "NONE",  
+                        "discription": "用于系统管理的菜单",  
+                        "createUserId": 1  
+                    },  
+                    "childs": [  
+                        {  
+                            "entity": {  
+                                "id": 3,  
+                                "parentMenuId": 1,  
+                                "name": "authManage",  
+                                "icon": "el-icon-loading",  
+                                "alias": "权限管理",  
+                                "state": "ENABLE",  
+                                "sort": 0,  
+                                "value": "/system/auth",  
+                                "type": "LINK",  
+                                "discription": "用于权限管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 4,  
+                                "parentMenuId": 1,  
+                                "name": "roleManage",  
+                                "icon": "el-icon-bell",  
+                                "alias": "角色管理",  
+                                "state": "ENABLE",  
+                                "sort": 1,  
+                                "value": "/system/role",  
+                                "type": "LINK",  
+                                "discription": "用于角色管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 2,  
+                                "parentMenuId": 1,  
+                                "name": "menuManage",  
+                                "icon": "el-icon-edit",  
+                                "alias": "菜单管理",  
+                                "state": "ENABLE",  
+                                "sort": 2,  
+                                "value": "/system/menu",  
+                                "type": "LINK",  
+                                "discription": "用于菜单管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 5,  
+                                "parentMenuId": 1,  
+                                "name": "groupManage",  
+                                "icon": "el-icon-mobile-phone\r\n",  
+                                "alias": "分组管理",  
+                                "state": "ENABLE",  
+                                "sort": 3,  
+                                "value": "/system/group",  
+                                "type": "LINK",  
+                                "discription": "用于分组管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        }  
+                    ]  
+                },  
+                {  
+                    "entity": {  
+                        "id": 6,  
+                        "parentMenuId": 0,  
+                        "name": "userManage",  
+                        "icon": "el-icon-news",  
+                        "alias": "用户管理",  
+                        "state": "ENABLE",  
+                        "sort": 1,  
+                        "value": null,  
+                        "type": "NONE",  
+                        "discription": "用于用户管理的菜单",  
+                        "createUserId": 1  
+                    },  
+                    "childs": [  
+                        {  
+                            "entity": {  
+                                "id": 7,  
+                                "parentMenuId": 6,  
+                                "name": "accountManage",  
+                                "icon": "el-icon-phone-outline\r\n",  
+                                "alias": "帐号管理",  
+                                "state": "ENABLE",  
+                                "sort": 0,  
+                                "value": "",  
+                                "type": "NONE",  
+                                "discription": "用于帐号管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": [  
+                                {  
+                                    "entity": {  
+                                        "id": 14,  
+                                        "parentMenuId": 7,  
+                                        "name": "emailManage",  
+                                        "icon": "el-icon-sold-out\r\n",  
+                                        "alias": "邮箱管理",  
+                                        "state": "ENABLE",  
+                                        "sort": 0,  
+                                        "value": "/content/email",  
+                                        "type": "LINK",  
+                                        "discription": "用于邮箱管理的菜单",  
+                                        "createUserId": 1  
+                                    },  
+                                    "childs": null  
+                                },  
+                                {  
+                                    "entity": {  
+                                        "id": 13,  
+                                        "parentMenuId": 7,  
+                                        "name": "passManage",  
+                                        "icon": "el-icon-service\r\n",  
+                                        "alias": "密码管理",  
+                                        "state": "ENABLE",  
+                                        "sort": 1,  
+                                        "value": "/content/pass",  
+                                        "type": "LINK",  
+                                        "discription": "用于密码管理的菜单",  
+                                        "createUserId": 1  
+                                    },  
+                                    "childs": null  
+                                }  
+                            ]  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 8,  
+                                "parentMenuId": 6,  
+                                "name": "integralManage",  
+                                "icon": "el-icon-picture",  
+                                "alias": "积分管理",  
+                                "state": "ENABLE",  
+                                "sort": 1,  
+                                "value": "/user/integral",  
+                                "type": "LINK",  
+                                "discription": "用于积分管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        }  
+                    ]  
+                },  
+                {  
+                    "entity": {  
+                        "id": 9,  
+                        "parentMenuId": 0,  
+                        "name": "contentManage",  
+                        "icon": "el-icon-rank",  
+                        "alias": "内容管理",  
+                        "state": "ENABLE",  
+                        "sort": 2,  
+                        "value": null,  
+                        "type": "NONE",  
+                        "discription": "用于内容管理的菜单",  
+                        "createUserId": 1  
+                    },  
+                    "childs": [  
+                        {  
+                            "entity": {  
+                                "id": 10,  
+                                "parentMenuId": 9,  
+                                "name": "classifyManage",  
+                                "icon": "el-icon-printer",  
+                                "alias": "分类管理",  
+                                "state": "ENABLE",  
+                                "sort": 0,  
+                                "value": "/content/classify",  
+                                "type": "LINK",  
+                                "discription": "用于分类管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 11,  
+                                "parentMenuId": 9,  
+                                "name": "articleManage",  
+                                "icon": "el-icon-star-on",  
+                                "alias": "文章管理",  
+                                "state": "ENABLE",  
+                                "sort": 1,  
+                                "value": "/content/article",  
+                                "type": "LINK",  
+                                "discription": "用于文章管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        },  
+                        {  
+                            "entity": {  
+                                "id": 12,  
+                                "parentMenuId": 9,  
+                                "name": "commentManage",  
+                                "icon": "el-icon-share",  
+                                "alias": "评论管理",  
+                                "state": "ENABLE",  
+                                "sort": 2,  
+                                "value": "/content/comment",  
+                                "type": "LINK",  
+                                "discription": "用于评论管理的菜单",  
+                                "createUserId": 1  
+                            },  
+                            "childs": null  
+                        }  
+                    ]  
+                }  
+            ]  
+        } ]
       }
     },
     methods: {
-      formatter(row, column) {
-        return row.address;
+      handleOpen(key, keyPath) {
+  // this.navMenus[0]=null;console.log(this.navMenus);
+        console.log(key, keyPath);
       },
-      filterTag(value, row) {
-        return row.tag === value;
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
       },
-      filterHandler(value, row, column) {
-        const property = column['property'];
-        return row[property] === value;
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      getUsers(){},
+      handleAdd(){},
+      handleCommand(command){
+        if(command == 'logout'){
+          this[command]();
+        }else{
+          this.$message('click on item ' + command);
+        }
+        // 使用菜单项的指令事件
+        // <el-dropdown-item command="logout">logout</el-dropdown-item>
+        // 使用原生click事件
+        // <el-dropdown-item @click.native = "logout()">螺蛳粉</el-dropdown-item>
+        // 
+      },logout(){
+        this.$message('click on item logout');
       }
     }
   }
