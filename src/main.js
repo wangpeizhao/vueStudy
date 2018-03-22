@@ -28,27 +28,41 @@ router.beforeEach((to, from, next) => {
 const store = new Vuex.Store({
   state: {
     roleSelected: [],
-    roleParentId: []
+    roleParentId: [],
+    roleNode : []
   },
   mutations: {
     roleSelectedAdd (state,id) {
     	if(state.roleSelected.length==0 && typeof(id) == 'object'){
     		state.roleSelected = id;
-    		// console.log(state.roleSelected);
     		return true;
     	}
-      	state.roleSelected.push(id);
-      	// console.log(state.roleSelected);
+      state.roleSelected.push(id);
     },
     roleSelectedDel (state,id) {
-		let index = state.roleSelected.indexOf(id);
-		if(index > -1){
-			state.roleSelected.splice(index, 1);
-		}
-		// console.log(state.roleSelected);
+  		let index = state.roleSelected.indexOf(id);
+  		if(index > -1){
+  			state.roleSelected.splice(index, 1);
+  		}
     },
     roleParentId (state,pIds){
     	state.roleParentId = pIds;
+    },
+    roleNodeAdd (state,id) {
+      if(state.roleNode.length==0 && typeof(id) == 'object'){
+        state.roleNode = id;
+        return true;
+      }
+      state.roleNode.push(id);
+    },
+    roleNodeDel (state,id) {
+      let index = state.roleNode.indexOf(id);
+      if(index > -1){
+        state.roleNode.splice(index, 1);
+      }
+    },
+    roleNodeEmpty(state){
+      state.roleNode = [];
     }
   },
   actions: {
@@ -60,6 +74,15 @@ const store = new Vuex.Store({
     },
     roleParentId (context,id) {
       context.commit('roleParentId',id)
+    },
+    roleNodeAdd (context,id) {
+      context.commit('roleNodeAdd',id)
+    },
+    roleNodeDel (context,id) {
+      context.commit('roleNodeDel',id)
+    },
+    roleNodeEmpty (context) {
+      context.commit('roleNodeEmpty')
     },
   }
 })
