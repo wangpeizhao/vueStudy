@@ -8,8 +8,8 @@
 </template>
 <script>
   import childrole from '@/components/ChildRole'
-  import '../../static/style/iconfont/iconfont.css'
-  import '../../static/style/role.css'
+  import '../../static/css/iconfont/iconfont.css'
+  import '../../static/css/role.css'
   export default {
     // props: ['childrole'],
     components:{childrole},

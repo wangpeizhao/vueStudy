@@ -216,7 +216,7 @@
 } 
 </style>
 <script>
-  import '../../static/style/iconfont/iconfont.css'
+  import '../../static/css/iconfont/iconfont.css'
   export default {
     data() {
       return {
